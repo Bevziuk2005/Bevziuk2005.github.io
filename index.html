@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Ім'я Прізвище</title>
+    <meta name="description" content="Portfolio сайт Full Stack розробника">
+    
+    <!-- Tailwind CSS через CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00AEEF',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-white">
+    <!-- Fixed Language Switcher - Always Visible -->
+    <div class="fixed top-4 right-4 z-50">
+        <div class="inline-flex rounded-lg border border-gray-200 bg-white/90 backdrop-blur-sm shadow-lg p-1">
+            <button onclick="changeLanguage('ua')" id="fixed-lang-ua" class="lang-btn px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 bg-primary text-white shadow-sm">UA</button>
+            <button onclick="changeLanguage('en')" id="fixed-lang-en" class="lang-btn px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 text-gray-700 hover:text-primary">EN</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 -translate-y-full">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-bold text-primary" data-translate="portfolio">Портфоліо</div>
+                
+                <div class="flex items-center gap-6">
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex space-x-8">
+                        <button onclick="scrollToSection('#about')" class="nav-link" data-translate="about">Про мене</button>
+                        <button onclick="scrollToSection('#resume')" class="nav-link" data-translate="resume">Резюме</button>
+                        <button onclick="scrollToSection('#skills')" class="nav-link" data-translate="skills">Навички</button>
+                        <button onclick="scrollToSection('#projects')" class="nav-link" data-translate="projects">Проєкти</button>
+                    </div>
+                    
+                    <!-- Language Switcher -->
+                    <div class="inline-flex rounded-lg border border-gray-200 p-1">
+                        <button onclick="changeLanguage('ua')" id="lang-ua" class="lang-btn px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 bg-primary text-white shadow-sm">UA</button>
+                        <button onclick="changeLanguage('en')" id="lang-en" class="lang-btn px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 text-gray-700 hover:text-primary">EN</button>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-700 hover:text-primary transition-colors">
+                        <i data-lucide="menu" id="menu-icon"></i>
+                        <i data-lucide="x" id="close-icon" class="hidden"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden mt-4 py-4 border-t border-gray-200 hidden">
+                <button onclick="scrollToSection('#about')" class="mobile-nav-link" data-translate="about">Про мене</button>
+                <button onclick="scrollToSection('#resume')" class="mobile-nav-link" data-translate="resume">Резюме</button>
+                <button onclick="scrollToSection('#skills')" class="mobile-nav-link" data-translate="skills">Навички</button>
+                <button onclick="scrollToSection('#projects')" class="mobile-nav-link" data-translate="projects">Проєкти</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-white py-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid lg:grid-cols-2 gap-12 items-start">
+                        <!-- Left Side - Name, Title, Social Links -->
+                        <div class="text-center lg:text-left">
+                            <div class="animate-fade-in">
+                                <h1 id="hero-name" class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">Ім'я Прізвище</h1>
+                                <p id="hero-title" class="text-xl md:text-2xl text-primary font-medium mb-8">Full Stack Розробник</p>
+                                
+                                <!-- Social Links -->
+                                <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+                                    <button onclick="openLink('https://github.com/yourusername')" class="social-btn">
+                                        <i data-lucide="github" class="w-5 h-5 mr-2"></i>
+                                        GitHub
+                                    </button>
+                                    <button onclick="openLink('https://linkedin.com/in/yourusername')" class="social-btn">
+                                        <i data-lucide="linkedin" class="w-5 h-5 mr-2"></i>
+                                        LinkedIn
+                                    </button>
+                                    <button onclick="openLink('https://t.me/yourusername')" class="social-btn">
+                                        <i data-lucide="send" class="w-5 h-5 mr-2"></i>
+                                        Telegram
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Side - About -->
+                        <div class="space-y-6">
+                            <div class="bg-gray-50 rounded-2xl p-6 md:p-8">
+                                <p id="hero-about" class="text-lg leading-relaxed text-gray-700">
+                                    Привіт! Я досвідчений розробник з понад 5 роками досвіду у створенні веб-додатків. Спеціалізуюся на React, Node.js та сучасних технологіях. Люблю створювати інтуїтивні користувацькі інтерфейси та ефективні серверні рішення.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scroll Arrow -->
+                    <div class="text-center mt-12 animate-bounce">
+                        <button onclick="scrollToSection('#about')" class="text-primary hover:text-primary/80 transition-colors">
+                            <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section (можна видалити або залишити для додаткової інформації) -->
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8" data-translate="about">Про мене</h2>
+                    <p class="text-lg text-gray-600">Ця секція може містити додаткову інформацію</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Section -->
+        <section id="resume" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12" data-translate="resume">Резюме</h2>
+                    
+                    <div class="text-center mb-8">
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <button onclick="toggleResume()" id="resume-toggle" class="btn-primary">
+                                <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i>
+                                <span data-translate="expandResume">Розгорнути резюме</span>
+                            </button>
+                            
+                            <button onclick="downloadResume()" class="btn-outline">
+                                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                                <span data-translate="downloadPDF">Завантажити PDF</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="resume-content" class="transition-all duration-500 overflow-hidden max-h-0 opacity-0">
+                        <div class="bg-white rounded-2xl shadow-lg p-8">
+                            <div id="resume-sections">
+                                <!-- Resume content will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12" data-translate="skills">Навички</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <!-- Hard Skills -->
+                        <div>
+                            <h3 class="text-2xl font-semibold text-primary mb-6 text-center" data-translate="hardSkills">Технічні навички</h3>
+                            <div id="hard-skills" class="flex flex-wrap gap-3 justify-center">
+                                <!-- Hard skills will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Soft Skills -->
+                        <div>
+                            <h3 class="text-2xl font-semibold text-primary mb-6 text-center" data-translate="softSkills">Особисті навички</h3>
+                            <div id="soft-skills" class="flex flex-wrap gap-3 justify-center">
+                                <!-- Soft skills will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12" data-translate="projects">Проєкти</h2>
+                    
+                    <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Projects will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-lg font-semibold mb-4 text-primary" data-translate="contacts">Контакти</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-center md:justify-start">
+                                <i data-lucide="mail" class="w-4 h-4 mr-2 text-primary"></i>
+                                <span class="text-sm">your.email@example.com</span>
+                            </div>
+                            <div class="flex items-center justify-center md:justify-start">
+                                <i data-lucide="phone" class="w-4 h-4 mr-2 text-primary"></i>
+                                <span class="text-sm">+380 XX XXX XX XX</span>
+                            </div>
+                            <div class="flex items-center justify-center md:justify-start">
+                                <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-primary"></i>
+                                <span id="footer-location" class="text-sm">Київ, Україна</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold mb-4 text-primary" data-translate="navigation">Навігація</h3>
+                        <div class="space-y-2">
+                            <button onclick="scrollToSection('#about')" class="footer-nav-link" data-translate="about">Про мене</button>
+                            <button onclick="scrollToSection('#resume')" class="footer-nav-link" data-translate="resume">Резюме</button>
+                            <button onclick="scrollToSection('#skills')" class="footer-nav-link" data-translate="skills">Навички</button>
+                            <button onclick="scrollToSection('#projects')" class="footer-nav-link" data-translate="projects">Проєкти</button>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center md:text-right">
+                        <h3 class="text-lg font-semibold mb-4 text-primary" data-translate="portfolio">Портфоліо</h3>
+                        <p class="text-sm text-gray-300 leading-relaxed" data-translate="portfolioDescription">
+                            Створено з любов'ю та увагою до деталей. Готовий до нових викликів та цікавих проєктів.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-8 text-center">
+                    <p class="text-sm text-gray-400">
+                        © <span id="current-year"></span> <span data-translate="portfolio">Портфоліо</span>. <span data-translate="copyright">Всі права захищені</span>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
